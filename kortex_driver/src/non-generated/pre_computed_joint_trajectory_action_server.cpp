@@ -79,13 +79,15 @@ void PreComputedJointTrajectoryActionServer::goal_received_callback(actionlib::A
     m_goal = new_goal_handle;
     m_goal.setAccepted();
 
+    // 2019-11-27: This block is commented out for making cyclic motions.
+    // cf. https://github.com/Kinovarobotics/ros_kortex/issues/29
     // Check if we are already there physically
-    if (is_goal_tolerance_respected(false, false))
-    {
-        ROS_INFO("We already reached the goal position : nothing to do.");
-        m_goal.setSucceeded();
-        return;
-    }
+    // if (is_goal_tolerance_respected(false, false))
+    // {
+    //     ROS_INFO("We already reached the goal position : nothing to do.");
+    //     m_goal.setSucceeded();
+    //     return;
+    // }
 
     // Construct the Protobuf object trajectory
     trajectory_msgs::JointTrajectory ros_trajectory = m_goal.getGoal()->trajectory;
